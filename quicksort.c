@@ -23,35 +23,26 @@ void quick_sort(int *x, int n)
     }
     int n_greater = n - n_less - 1;
 
-    int *less = NULL;
-    int *greater = NULL;
+    int less[n_less];
+    int greater[n_greater];
 
-    if (n_less)
+    int i_less = 0;
+    int i_greater = 0;
+
+    for (int i = 0; i < n; i++)
     {
-        less = malloc(sizeof(int) * n_less);
-        int i_less = 0;
-        for (int i = 0; i < n; i++)
+        if (x[i] < pivot)
         {
-            if (x[i] < pivot)
-            {
-                less[i_less++] = x[i];
-            }
+            less[i_less++] = x[i];
         }
-        quick_sort(less, n_less);
-    }
-    if (n_greater)
-    {
-        greater = malloc(sizeof(int) * n_greater);
-        int i_greater = 0;
-        for (int i = 0; i < n; i++)
+        else if (i != p)
         {
-            if ((i != p) && (x[i] >= pivot))
-            {
-                greater[i_greater++] = x[i];
-            }
+            greater[i_greater++] = x[i];
         }
-        quick_sort(greater, n_greater);
     }
+
+    quick_sort(less, n_less);
+    quick_sort(greater, n_greater);
 
     for (int i = 0; i < n_less; i++)
     {
